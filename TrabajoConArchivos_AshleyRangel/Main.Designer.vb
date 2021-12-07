@@ -89,7 +89,6 @@ Partial Class Main
         Me.ZoomAlejarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
         Me.VistaNormal11ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripContainer2 = New System.Windows.Forms.ToolStripContainer()
         Me.ColorDG = New System.Windows.Forms.ColorDialog()
         Me.FontDG = New System.Windows.Forms.FontDialog()
@@ -105,6 +104,7 @@ Partial Class Main
         '
         'Menus
         '
+        Me.Menus.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Menus.Dock = System.Windows.Forms.DockStyle.None
         Me.Menus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ArchivoToolStripMenuItem, Me.EditarToolStripMenuItem, Me.VerToolStripMenuItem})
         Me.Menus.Location = New System.Drawing.Point(0, 0)
@@ -341,11 +341,13 @@ Partial Class Main
         '
         'ToolStripContainer1.TopToolStripPanel
         '
+        Me.ToolStripContainer1.TopToolStripPanel.BackColor = System.Drawing.SystemColors.Control
         Me.ToolStripContainer1.TopToolStripPanel.Controls.Add(Me.Menus)
         Me.ToolStripContainer1.TopToolStripPanel.Controls.Add(Me.tBar)
         '
         'stBar
         '
+        Me.stBar.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.stBar.Dock = System.Windows.Forms.DockStyle.None
         Me.stBar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.stLabel, Me.stLabelCaracteres})
         Me.stBar.Location = New System.Drawing.Point(0, 0)
@@ -386,10 +388,10 @@ Partial Class Main
         '
         Me.tBar.Dock = System.Windows.Forms.DockStyle.None
         Me.tBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.tBar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsBtnNuevo, Me.tsBtnAbrir, Me.tsBtnGuardar, Me.tsBtnGuardarComo, Me.ToolStripSeparator6, Me.tsBtnCerrar, Me.ToolStripSeparator7, Me.tsBtnSalir, Me.ToolStripSeparator8, Me.tsBtnDeshacer, Me.ToolStripSeparator14, Me.tsBtnCortar, Me.tsBtnCopiar, Me.tsBtnPegar, Me.ToolStripSeparator9, Me.tsBtnIzquierda, Me.tsBtnCentrar, Me.tsBtnDerecha, Me.ToolStripSeparator10, Me.tsBtnFonts, Me.tsBtnColor, Me.ToolStripSeparator11, Me.tsBtnZoom, Me.ToolStripSeparator13})
+        Me.tBar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsBtnNuevo, Me.tsBtnAbrir, Me.tsBtnGuardar, Me.tsBtnGuardarComo, Me.ToolStripSeparator6, Me.tsBtnCerrar, Me.ToolStripSeparator7, Me.tsBtnSalir, Me.ToolStripSeparator8, Me.tsBtnDeshacer, Me.ToolStripSeparator14, Me.tsBtnCortar, Me.tsBtnCopiar, Me.tsBtnPegar, Me.ToolStripSeparator9, Me.tsBtnIzquierda, Me.tsBtnCentrar, Me.tsBtnDerecha, Me.ToolStripSeparator10, Me.tsBtnFonts, Me.tsBtnColor, Me.ToolStripSeparator11, Me.tsBtnZoom})
         Me.tBar.Location = New System.Drawing.Point(3, 24)
         Me.tBar.Name = "tBar"
-        Me.tBar.Size = New System.Drawing.Size(428, 25)
+        Me.tBar.Size = New System.Drawing.Size(422, 25)
         Me.tBar.TabIndex = 2
         '
         'tsBtnNuevo
@@ -568,7 +570,7 @@ Partial Class Main
         Me.tsBtnColor.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.tsBtnColor.Name = "tsBtnColor"
         Me.tsBtnColor.Size = New System.Drawing.Size(23, 22)
-        Me.tsBtnColor.Text = "CAmbiar color de fuente"
+        Me.tsBtnColor.Text = "Cambiar color de fuente"
         '
         'ToolStripSeparator11
         '
@@ -609,11 +611,6 @@ Partial Class Main
         Me.VistaNormal11ToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.VistaNormal11ToolStripMenuItem.Text = "Vista normal"
         '
-        'ToolStripSeparator13
-        '
-        Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
-        Me.ToolStripSeparator13.Size = New System.Drawing.Size(6, 25)
-        '
         'ToolStripContainer2
         '
         '
@@ -633,9 +630,11 @@ Partial Class Main
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.ToolStripContainer1)
         Me.Controls.Add(Me.ToolStripContainer2)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.Menus
         Me.Name = "Main"
-        Me.Text = "Amazing Editor v1.0"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Enchulador de texto v1.0"
         Me.Menus.ResumeLayout(False)
         Me.Menus.PerformLayout()
         Me.ToolStripContainer1.BottomToolStripPanel.ResumeLayout(False)
@@ -718,7 +717,6 @@ Partial Class Main
     Friend WithEvents ZoomAlejarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator12 As ToolStripSeparator
     Friend WithEvents VistaNormal11ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator13 As ToolStripSeparator
     Friend WithEvents tsBtnDeshacer As ToolStripButton
     Friend WithEvents ToolStripSeparator14 As ToolStripSeparator
     Friend WithEvents ColorDG As ColorDialog

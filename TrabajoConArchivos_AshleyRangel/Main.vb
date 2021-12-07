@@ -11,6 +11,8 @@ Public Class Main
         tsBtnAbrir.Enabled = Not tsBtnAbrir.Enabled
         tsBtnGuardar.Enabled = Not tsBtnGuardar.Enabled
         tsBtnGuardarComo.Enabled = Not tsBtnGuardarComo.Enabled
+        tsBtnSalir.Enabled = Not tsBtnSalir.Enabled
+        tsBtnDeshacer.Enabled = Not tsBtnDeshacer.Enabled
         tsBtnCerrar.Enabled = Not tsBtnCerrar.Enabled
         tsBtnCortar.Enabled = Not tsBtnCortar.Enabled
         tsBtnCopiar.Enabled = Not tsBtnCopiar.Enabled
@@ -39,6 +41,8 @@ Public Class Main
         AlinearALaIzquierdaToolStripMenuItem.Enabled = Not AlinearALaIzquierdaToolStripMenuItem.Enabled
         AlinearALaDerechaToolStripMenuItem.Enabled = Not AlinearALaDerechaToolStripMenuItem.Enabled
         AlinearAlCentroToolStripMenuItem.Enabled = Not AlinearAlCentroToolStripMenuItem.Enabled
+        AlinearToolStripMenuItem.Enabled = Not AlinearToolStripMenuItem.Enabled
+        CambiarColorDeFondoToolStripMenuItem.Enabled = Not CambiarColorDeFondoToolStripMenuItem.Enabled
         CambiarFuenteToolStripMenuItem.Enabled = Not CambiarFuenteToolStripMenuItem.Enabled
         controlRTF.ReadOnly = Not controlRTF.ReadOnly
     End Sub
@@ -107,9 +111,10 @@ Public Class Main
             If Windows.Forms.DialogResult.OK Then
                 If OpenDG.FileName <> “” Then controlRTF.LoadFile(OpenDG.FileName)
                 pathFileName = OpenDG.FileName
-                Me.Text = "Amazing Editor v1.0 - " + pathFileName
+                Me.Text = "Enchulador de texto v1.0 - " + pathFileName
                 If controlRTF.Visible = False Then controlRTF.Visible = True
-                'CambioControles()
+                CambioControles()
+                stLabel.Text = pathFileName
             End If
         End If
     End Sub
@@ -129,7 +134,9 @@ Public Class Main
         If Windows.Forms.DialogResult.OK Then
             If SaveDG.FileName <> “” Then
                 controlRTF.SaveFile(SaveDG.FileName)
+                pathFileName = SaveDG.FileName
                 bCambio = False
+                Me.Text = "Enchulador de texto v1.0 - " + pathFileName
             End If
         End If
     End Sub
@@ -148,25 +155,26 @@ Public Class Main
             End If
         End If
         pathFileName = “”
-        Me.Text = "Amazing Editor v1.0 - " + pathFileName
+        Me.Text = "Enchulador de texto v1.0 - Nuevo Documento"
         controlRTF.ResetText()
-        controlRTF.ReadOnly = False
+        CambioControles()
+        'controlRTF.ReadOnly = False
         controlRTF.Visible = True
         controlRTF.Focus()
-        CambioControles()
-        tsBtnAbrir.Enabled = True
+        'tsBtnAbrir.Enabled = True
     End Sub
 
     Public Sub CerrarDocumento()
         If pathFileName <> “” Then
             controlRTF.SaveFile(pathFileName)
-            CambioControles()
+        ElseIf bCambio And pathFileName = “” Then
+            GuardarDocumento()
         End If
-        If bCambio And pathFileName = “” Then GuardarDocumento()
         controlRTF.Text = “”
         pathFileName = “”
-        Me.Text = "Amazing Editor v1.0"
+        Me.Text = "Enchulador de texto v1.0"
         bCambio = False
+        CambioControles()
     End Sub
 
     Public Sub insertarImagen()
@@ -185,25 +193,15 @@ Public Class Main
     End Sub
 
     Private Sub subMenuAbrir_Click(sender As Object, e As EventArgs) Handles subMenuAbrir.Click
-        OpenDG.Multiselect = False
-        If OpenDG.ShowDialog() = DialogResult.OK Then
-            strNombreArchivo = Path.GetFileName(OpenDG.FileName)
-            stLabel.Text = strNombreArchivo
-            controlRTF.Text = IO.File.ReadAllText(Path.GetFullPath(OpenDG.FileName))
-            Me.Text = "Amazing Editor v1.0 - " + strNombreArchivo
-        End If
-        CambioControles()
+        AbrirDocumento()
     End Sub
 
     Private Sub subMenuCerrar_Click(sender As Object, e As EventArgs) Handles subMenuCerrar.Click
-        controlRTF.Text = “”
-        stLabel.Text = “No seleccionado”
-        Me.Text = "Amazing Editor v1.0"
+        CerrarDocumento()
     End Sub
 
     Private Sub subMenuGuardar_Click(sender As Object, e As EventArgs) Handles subMenuGuardar.Click
-        'My.Computer.FileSystem.WriteAllText(stLabel.Text, txtArchivo.Text, False)
-        IO.File.WriteAllText(Path.GetFullPath(OpenDG.FileName), controlRTF.Text)
+        GuardarDocumento()
     End Sub
 
     Private Sub subMenuSalir_Click(sender As Object, e As EventArgs) Handles subMenuSalir.Click
@@ -294,7 +292,12 @@ Public Class Main
     End Sub
 
     Private Sub CambiarColorDeFondoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CambiarColorDeFondoToolStripMenuItem.Click
-
+        ColorDG.AllowFullOpen = True
+        ColorDG.Color = controlRTF.SelectionColor
+        ColorDG.ShowDialog()
+        If Windows.Forms.DialogResult.OK Then
+            controlRTF.BackColor = ColorDG.Color
+        End If
     End Sub
 
     Private Sub VistaNormalMenuItem_Click(sender As Object, e As EventArgs) Handles VistaNormalMenuItem.Click
@@ -307,7 +310,6 @@ Public Class Main
     End Sub
 
     Private Sub tsBtnNuevo_Click(sender As Object, e As EventArgs) Handles tsBtnNuevo.Click
-        CambioControles()
         nuevoDocumento()
     End Sub
 
@@ -327,9 +329,7 @@ Public Class Main
     End Sub
 
     Private Sub tsBtnCerrar_Click(sender As Object, e As EventArgs) Handles tsBtnCerrar.Click
-        controlRTF.Text = “”
-        stLabel.Text = “No seleccionado”
-        Me.Text = "Amazing Editor v1.0"
+        CerrarDocumento()
     End Sub
 
     Private Sub tsBtnSalir_Click(sender As Object, e As EventArgs) Handles tsBtnSalir.Click
